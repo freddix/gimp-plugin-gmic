@@ -2,12 +2,12 @@
 
 Summary:	G'MIC interpreter embedded in a GIMP plug-in
 Name:		gimp-plugin-%{plugin}
-Version:	1.5.2.2
+Version:	1.5.2.3
 Release:	1
 License:	CeCILL FREE SOFTWARE LICENSE
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/sourceforge/gmic/%{plugin}_%{version}.tar.gz
-# Source0-md5:	7dd6ea3b2e3d02fac6d046c57d906dc0
+# Source0-md5:	8bcfe69e53e65d7a34f01739d947f2b2
 Patch0:		%{name}-build.patch
 BuildRequires:	fftw3-devel
 BuildRequires:	gimp-devel
