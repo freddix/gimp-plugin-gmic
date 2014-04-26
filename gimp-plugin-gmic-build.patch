@@ -1,32 +1,30 @@
-diff -aurN gmic-1.5.7.0.orig/src/Makefile gmic-1.5.7.0/src/Makefile
---- gmic-1.5.7.0.orig/src/Makefile	2013-09-15 21:42:36.249900474 +0200
-+++ gmic-1.5.7.0/src/Makefile	2013-09-15 21:45:10.611831155 +0200
-@@ -247,8 +247,8 @@
+diff -aurN gmic-1.5.8.6.orig/src/Makefile gmic-1.5.8.6/src/Makefile
+--- gmic-1.5.8.6.orig/src/Makefile	2014-04-26 12:20:37.353674524 +0200
++++ gmic-1.5.8.6/src/Makefile	2014-04-26 12:24:54.130131319 +0200
+@@ -267,8 +267,8 @@
  		     $(EXR_LDFLAGS) $(FFTW_LDFLAGS) # $(MAGICK_LDFLAGS)
  
  # GIMP plug-in : Standard build.
--STD_GIMP_CFLAGS = $(MANDATORY_CFLAGS) $(PARALLEL_CFLAGS) $(FFTW_CFLAGS) $(PNG_CFLAGS) $(ZLIB_CFLAGS) ${IS_BETA_CFLAGS} -Dcimg_display=0 -Dcimg_use_rng
+-STD_GIMP_CFLAGS = $(MANDATORY_CFLAGS) $(CHECKIMAGE_CFLAGS) $(PARALLEL_CFLAGS) $(FFTW_CFLAGS) $(PNG_CFLAGS) $(ZLIB_CFLAGS) ${IS_BETA_CFLAGS} -Dcimg_display=0 -Dcimg_use_rng
 -STD_GIMP_LDFLAGS = $(MANDATORY_LDFLAGS) $(PARALLEL_LDFLAGS) $(FFTW_LDFLAGS) $(PNG_LDFLAGS) $(ZLIB_LDFLAGS)
-+STD_GIMP_CFLAGS = $(OPTCXXFLAGS) $(MANDATORY_CFLAGS) $(PARALLEL_CFLAGS) $(FFTW_CFLAGS) $(PNG_CFLAGS) $(ZLIB_CFLAGS) ${IS_BETA_CFLAGS} -Dcimg_display=0 -Dcimg_use_rng
++STD_GIMP_CFLAGS = $(OPTCXXFLAGS) $(MANDATORY_CFLAGS) $(CHECKIMAGE_CFLAGS) $(PARALLEL_CFLAGS) $(FFTW_CFLAGS) $(PNG_CFLAGS) $(ZLIB_CFLAGS) ${IS_BETA_CFLAGS} -Dcimg_display=0 -Dcimg_use_rng
 +STD_GIMP_LDFLAGS = $(MANDATORY_LDFLAGS) $(OPTLDFLAGS) $(PARALLEL_LDFLAGS) $(FFTW_LDFLAGS) $(PNG_LDFLAGS) $(ZLIB_LDFLAGS)
  ifeq ($(OSTYPE),msys)
  STD_GIMP_LDFLAGS += -mwindows -lpthread
  endif
-@@ -349,7 +349,7 @@
+@@ -366,7 +366,6 @@
  	$(CC) -o gmic_gimp.o -c gmic.cpp $(CFLAGS) -Dgmic_gimp -Dgmic_float_only
  gmic_gimp : gmic_gimp.o gmic_gimp.cpp
  	$(CC) -o gmic_gimp gmic_gimp.cpp gmic_gimp.o `gimptool-2.0$(EXE) --cflags` $(CFLAGS) `gimptool-2.0$(EXE) --libs` $(LDFLAGS)
 -	strip gmic_gimp$(EXE)
-+	/usr/bin/true gmic_gimp$(EXE)
  
- gmic_minimal: gmic.cpp
- 	$(CC) -o gmic gmic.cpp $(CFLAGS) -Dgmic_float_only -Dgmic_main $(LDFLAGS)
-@@ -374,7 +374,7 @@
+ gmic_bool.o: gmic.cpp
+ 	$(CC) -o gmic_bool.o -c gmic.cpp $(CFLAGS) -Dgmic_split_compilation -Dgmic_bool
+@@ -388,7 +387,6 @@
  	$(CC) -o gmic_double.o -c gmic.cpp $(CFLAGS) -Dgmic_split_compilation -Dgmic_double
- gmic_gmic: gmic_bool.o gmic_uchar.o gmic_char.o gmic_ushort.o gmic_short.o gmic_uint.o gmic_int.o gmic_float.o gmic_double.o gmic_def.h
+ gmic_cli_alltypes: gmic_bool.o gmic_uchar.o gmic_char.o gmic_ushort.o gmic_short.o gmic_uint.o gmic_int.o gmic_float.o gmic_double.o
  	$(CC) -o gmic gmic_bool.o gmic_uchar.o gmic_char.o gmic_ushort.o gmic_short.o gmic_uint.o gmic_int.o gmic_float.o gmic_double.o $(LDFLAGS)
 -	strip gmic$(EXE)
-+	/usr/bin/true gmic$(EXE)
  
- def:
- 	@echo "#ifndef gmic_gimp" > gmic_def.h
+ gmic_cli_standard: gmic.cpp
+ 	$(CC) -o gmic gmic.cpp $(CFLAGS) -Dgmic_float_only -Dgmic_main $(LDFLAGS)
