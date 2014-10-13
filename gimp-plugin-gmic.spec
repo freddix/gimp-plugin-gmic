@@ -2,13 +2,12 @@
 
 Summary:	G'MIC interpreter embedded in a GIMP plug-in
 Name:		gimp-plugin-%{plugin}
-Version:	1.5.8.6
+Version:	1.6.0.1
 Release:	1
 License:	CeCILL FREE SOFTWARE LICENSE
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/sourceforge/gmic/%{plugin}_%{version}.tar.gz
-# Source0-md5:	0df62707961248869477c58f6c7d7605
-Patch0:		%{name}-build.patch
+# Source0-md5:	39858b032636f6bf6e4026d5022d2dd5
 BuildRequires:	fftw3-devel
 BuildRequires:	gimp-devel
 BuildRequires:	libstdc++-devel
@@ -22,13 +21,13 @@ G'MIC interpreter embedded in a GIMP plug-in.
 
 %prep
 %setup -qn %{plugin}-%{version}
-%patch0 -p1
+
+%{__sed} -i '/strip\ gmic.*/d' src/Makefile
 
 %build
 %{__make} -j1 -C src gimp		\
 	CC="%{__cxx}"			\
-	OPTCXXFLAGS="%{rpmcxxflags}"	\
-	OPTLDFLAGS="%{rpmldflags}"
+	OPT_CFLAGS="%{rpmldflags} %{rpmcxxflags} -fno-ipa-sra"
 
 %install
 rm -rf $RPM_BUILD_ROOT
